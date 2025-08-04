@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>1D Cutting Stock Optimizer</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+  <div class="container">
+    <h1>Cutting Stock Optimizer</h1>
+    <input id="stocks" placeholder="Stock lengths (e.g. 144,156,180)" />
+    <input id="requirements" placeholder="Required cuts (e.g. 24x4,36x4)" />
+    <input id="leftover" placeholder="Min leftover (e.g. 48)" />
+    <button onclick="sendData()">Optimize</button>
+    <div id="output"></div>
+  </div>
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
