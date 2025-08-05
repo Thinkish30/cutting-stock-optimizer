@@ -9,7 +9,7 @@ body {
   padding: 30px;
   border-radius: 10px;
 }
-input {
+input, select {
   display: block;
   width: 100%;
   margin: 10px 0;

@@ -7,12 +7,26 @@
 <body>
   <div class="container">
     <h1>Cutting Stock Optimizer</h1>
-    <input id="stocks" placeholder="Stock lengths (e.g. 144,156,180)" />
-    <input id="requirements" placeholder="Required cuts (e.g. 24x4,36x4)" />
-    <input id="leftover" placeholder="Min leftover (e.g. 48)" />
+
+    <label>Available Stock Lengths (in inches):</label>
+    <input id="stocks" placeholder="e.g. 144,156,180" />
+
+    <label>Required Cuts (length x quantity):</label>
+    <input id="requirements" placeholder="e.g. 24x4,36x4" />
+
+    <label>Minimum Leftover to Keep (in inches):</label>
+    <input id="leftover" placeholder="e.g. 48" />
+
+    <label><strong>Select Mode:</strong></label>
+    <select id="mode">
+      <option value="fast">Fast (Greedy)</option>
+      <option value="optimized">Optimized (DP)</option>
+    </select>
+
     <button onclick="sendData()">Optimize</button>
     <div id="output"></div>
   </div>
+
   <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>

@@ -2,6 +2,7 @@ function sendData() {
   const stocks = document.getElementById('stocks').value;
   const requirements = document.getElementById('requirements').value;
   const leftover = document.getElementById('leftover').value;
+  const mode = document.getElementById('mode').value;
 
   fetch('/optimize', {
     method: 'POST',
@@ -9,7 +10,8 @@ function sendData() {
     body: JSON.stringify({
       stocks: stocks.split(','),
       requirements: requirements,
-      leftoverLimit: leftover
+      leftoverLimit: leftover,
+      mode: mode
     })
   })
   .then(res => res.json())
