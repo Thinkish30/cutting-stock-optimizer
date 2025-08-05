@@ -1,33 +1,78 @@
 body {
   font-family: sans-serif;
   background: #f4f4f4;
+  margin: 0;
+  padding: 0;
 }
+
 .container {
   max-width: 800px;
   margin: 40px auto;
   background: white;
   padding: 30px;
   border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
-input, select {
-  display: block;
+
+input, select, button {
   width: 100%;
-  margin: 10px 0;
   padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 15px;
 }
+
 button {
-  padding: 10px 20px;
-  background: #007bff;
+  background-color: #007bff;
   color: white;
-  border: none;
+  font-weight: bold;
   cursor: pointer;
 }
+
+button:hover {
+  background-color: #0056b3;
+}
+
+#stock-buttons {
+  margin-bottom: 15px;
+}
+
+#stock-buttons button {
+  display: inline-block;
+  width: auto;
+  padding: 8px 16px;
+  margin: 5px;
+  font-size: 14px;
+  border-radius: 6px;
+  background-color: #eee;
+  border: 1px solid #ccc;
+  cursor: pointer;
+}
+
+#stock-buttons button.selected {
+  background-color: #007bff;
+  color: white;
+  border-color: #007bff;
+}
+
+.cut-row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.cut-row input {
+  flex: 1;
+}
+
 .stock-block {
   border: 1px solid #ddd;
   padding: 10px;
   border-radius: 5px;
   background-color: #f9f9f9;
 }
+
 .cut-bar {
   margin-top: 5px;
   display: flex;

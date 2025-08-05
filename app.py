@@ -15,7 +15,7 @@ def optimize():
     leftover_limit = int(data['leftoverLimit'])
     mode = data.get('mode', 'fast')  # 'fast' or 'optimized'
 
-    # Expand requirements like 24x4 to [24,24,24,24]
+    # Expand requirements like 24x4 to [24, 24, 24, 24]
     requirements = []
     for req in requirements_raw.split(','):
         length, qty = req.lower().split('x')

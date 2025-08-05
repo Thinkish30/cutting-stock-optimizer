@@ -8,13 +8,25 @@
   <div class="container">
     <h1>Cutting Stock Optimizer</h1>
 
-    <label>Available Stock Lengths (in inches):</label>
-    <input id="stocks" placeholder="e.g. 144,156,180" />
+    <label><strong>Select Available Stock Lengths (in inches):</strong></label>
+    <div id="stock-buttons">
+      <button type="button" onclick="toggleStock(144)">144</button>
+      <button type="button" onclick="toggleStock(156)">156</button>
+      <button type="button" onclick="toggleStock(180)">180</button>
+      <button type="button" onclick="toggleStock(192)">192</button>
+    </div>
+    <input type="hidden" id="stocks" />
 
-    <label>Required Cuts (length x quantity):</label>
-    <input id="requirements" placeholder="e.g. 24x4,36x4" />
+    <label><strong>Required Cuts:</strong></label>
+    <div id="cut-rows">
+      <div class="cut-row">
+        <input class="cut-length" placeholder="Length (e.g. 24)" />
+        <input class="cut-qty" placeholder="Quantity (e.g. 4)" />
+      </div>
+    </div>
+    <button type="button" onclick="addCutRow()">+ Add More</button>
 
-    <label>Minimum Leftover to Keep (in inches):</label>
+    <label><strong>Minimum Leftover to Keep (in inches):</strong></label>
     <input id="leftover" placeholder="e.g. 48" />
 
     <label><strong>Select Mode:</strong></label>
@@ -25,8 +37,8 @@
 
     <button onclick="sendData()">Optimize</button>
     <div id="output"></div>
-  </div>
 
-  <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+  </div>
 </body>
 </html>
