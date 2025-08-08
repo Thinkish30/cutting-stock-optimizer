@@ -10,7 +10,6 @@ function toggleStock(value) {
     selectedStocks.splice(index, 1);
   }
 
-  // Toggle button appearance
   buttons.forEach(btn => {
     if (parseInt(btn.textContent) === value) {
       btn.classList.toggle("selected");
@@ -25,18 +24,15 @@ function addCutRow() {
   const div = document.createElement("div");
   div.classList.add("cut-row");
   div.innerHTML = `
-    <input class="cut-length" placeholder="Length (e.g. 24)" />
-    <input class="cut-qty" placeholder="Quantity (e.g. 4)" />
+    <input class="cut-length" type="number" placeholder="Length (e.g. 24)" />
+    <input class="cut-qty" type="number" placeholder="Quantity (e.g. 4)" />
   `;
   container.appendChild(div);
 }
 
 function sendData() {
   const stocks = selectedStocks;
-  const leftover = document.getElementById('leftover').value;
-  const mode = document.getElementById('mode').value;
 
-  // Get all length-quantity pairs
   const lengths = document.querySelectorAll(".cut-length");
   const qtys = document.querySelectorAll(".cut-qty");
   let requirements = [];
@@ -49,26 +45,37 @@ function sendData() {
     }
   }
 
+  if (stocks.length === 0 || requirements.length === 0) {
+    alert("Please select stocks and add cut sizes.");
+    return;
+  }
+
   fetch('/optimize', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       stocks: stocks,
-      requirements: requirements.join(','),
-      leftoverLimit: leftover,
-      mode: mode
+      requirements: requirements.join(',')
     })
   })
   .then(res => res.json())
-  .then(data => showOutput(data));
+  .then(data => showOutput(data))
+  .catch(err => {
+    console.error("Error:", err);
+    alert("Something went wrong.");
+  });
 }
 
-function getRandomColor() {
+// Consistent color per size
+const colorMap = {};
+function getColorForSize(size) {
+  if (colorMap[size]) return colorMap[size];
   const letters = '0123456789ABCDEF';
   let color = '#';
   for (let i = 0; i < 6; i++) {
     color += letters[Math.floor(Math.random() * 16)];
   }
+  colorMap[size] = color;
   return color;
 }
 
@@ -77,18 +84,22 @@ function showOutput(results) {
   div.innerHTML = '<h2>Cutting Plan</h2>';
 
   results.forEach((res, i) => {
-    let cutsHTML = res.cuts.map(cut => {
+    const cutsHTML = res.cuts.map(cut => {
       const widthPercent = (cut / res.stock) * 100;
-      const color = getRandomColor();
-      return `<div style="display:inline-block; width:${widthPercent}%; background-color:${color}; height:25px; text-align:center; font-size:12px; color:#fff">${cut}</div>`;
+      const color = getColorForSize(cut);
+      return `<div class="cut-segment" style="width:${widthPercent}%; background-color:${color};">
+                <span>${cut}in</span>
+              </div>`;
     }).join('');
 
     const leftoverWidth = (res.leftover / res.stock) * 100;
-    const leftoverBar = `<div style="display:inline-block; width:${leftoverWidth}%; background-color:#ccc; height:25px; text-align:center; font-size:12px;">${res.leftover}</div>`;
+    const leftoverBar = `<div class="cut-segment leftover" style="width:${leftoverWidth}%;">
+                          <span>${res.leftover}in</span>
+                         </div>`;
 
     div.innerHTML += `
       <div class="stock-block">
-        <p><strong>Stock #${i + 1}:</strong> ${res.stock}" | Leftover: ${res.leftover}" ${res.reusable ? '(Reusable)' : '(Waste)'}</p>
+        <p><strong>Stock #${i + 1}:</strong> ${res.stock}" | Leftover: ${res.leftover}"</p>
         <div class="cut-bar">${cutsHTML}${leftoverBar}</div>
       </div><br>`;
   });

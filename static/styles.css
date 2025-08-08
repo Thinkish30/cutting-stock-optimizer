@@ -71,12 +71,86 @@ button:hover {
   padding: 10px;
   border-radius: 5px;
   background-color: #f9f9f9;
+  margin-bottom: 10px;
 }
 
 .cut-bar {
-  margin-top: 5px;
   display: flex;
-  overflow: hidden;
+  flex-wrap: nowrap;
+  overflow-x: auto;
   border: 1px solid #aaa;
-  border-radius: 3px;
+  border-radius: 8px;
+  margin-top: 10px;
+  background-color: #f1f1f1;
+  padding: 4px;
+}
+
+.cut-segment {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+  height: 35px;
+  font-size: 12px;
+  font-weight: bold;
+  color: white;
+  margin-right: 2px;
+  min-width: 40px;
+  position: relative;
+  text-align: center;
+  overflow: hidden;
+}
+
+.cut-segment span {
+  white-space: nowrap;
+  padding: 0 4px;
+  font-size: 13px;
+  z-index: 2;
+}
+
+.cut-segment.leftover {
+  background-color: #ccc !important;
+  color: #000;
+}
+
+@media screen and (max-width: 600px) {
+  .container {
+    padding: 20px 10px;
+    margin: 20px 5px;
+  }
+
+  input, select, button {
+    font-size: 14px;
+    padding: 8px;
+  }
+
+  #stock-buttons button {
+    padding: 6px 10px;
+    font-size: 13px;
+  }
+
+  .cut-row {
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .cut-bar {
+    padding: 2px;
+  }
+
+  .cut-segment {
+    height: 30px;
+    font-size: 11px;
+    min-width: 30px;
+    border-radius: 4px;
+  }
+
+  .cut-segment span {
+    font-size: 11px;
+    padding: 0 3px;
+  }
+
+  .stock-block p {
+    font-size: 14px;
+  }
 }

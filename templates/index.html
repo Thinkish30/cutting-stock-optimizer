@@ -2,12 +2,14 @@
 <html>
 <head>
   <title>1D Cutting Stock Optimizer</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
   <div class="container">
     <h1>Cutting Stock Optimizer</h1>
 
+    <!-- Stock Selection -->
     <label><strong>Select Available Stock Lengths (in inches):</strong></label>
     <div id="stock-buttons">
       <button type="button" onclick="toggleStock(144)">144</button>
@@ -17,28 +19,24 @@
     </div>
     <input type="hidden" id="stocks" />
 
-    <label><strong>Required Cuts:</strong></label>
+    <!-- Required Cuts -->
+    <label><strong>Required Cuts (Length x Quantity):</strong></label>
     <div id="cut-rows">
       <div class="cut-row">
-        <input class="cut-length" placeholder="Length (e.g. 24)" />
-        <input class="cut-qty" placeholder="Quantity (e.g. 4)" />
+        <input class="cut-length" type="number" placeholder="Length (e.g. 24)" />
+        <input class="cut-qty" type="number" placeholder="Quantity (e.g. 4)" />
       </div>
     </div>
     <button type="button" onclick="addCutRow()">+ Add More</button>
 
-    <label><strong>Minimum Leftover to Keep (in inches):</strong></label>
-    <input id="leftover" placeholder="e.g. 48" />
-
-    <label><strong>Select Mode:</strong></label>
-    <select id="mode">
-      <option value="fast">Fast (Greedy)</option>
-      <option value="optimized">Optimized (DP)</option>
-    </select>
-
+    <!-- Optimize -->
     <button onclick="sendData()">Optimize</button>
-    <div id="output"></div>
 
-    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <!-- Output Section -->
+    <div id="output"></div>
   </div>
+
+  <!-- Script -->
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>
