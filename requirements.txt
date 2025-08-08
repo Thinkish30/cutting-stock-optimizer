@@ -1,0 +1,7 @@
+flask
+rectpack
+
+pip freeze > requirements.txt
+git add requirements.txt
+git commit -m "Add requirements.txt for deployment"
+git push
