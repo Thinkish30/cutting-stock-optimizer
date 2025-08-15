@@ -24,7 +24,7 @@ function addCutRow() {
   const div = document.createElement("div");
   div.classList.add("cut-row");
   div.innerHTML = `
-    <input class="cut-length" type="number" placeholder="Length (e.g. 24)" />
+    <input class="cut-length" type="number" placeholder="Length (e.g. 24)" step="0.01"/>
     <input class="cut-qty" type="number" placeholder="Quantity (e.g. 4)" />
   `;
   container.appendChild(div);
@@ -41,7 +41,7 @@ function sendData() {
     const len = lengths[i].value.trim();
     const qty = qtys[i].value.trim();
     if (len && qty) {
-      requirements.push(`${len}x${qty}`);
+      requirements.push(`${parseFloat(len)}x${parseInt(qty)}`);
     }
   }
 

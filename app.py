@@ -10,18 +10,19 @@ def index():
 @app.route('/optimize', methods=['POST'])
 def optimize():
     data = request.get_json()
-    stock_lengths = sorted(map(int, data['stocks']))
+    stock_lengths = sorted(map(float, data['stocks']))  # float for decimal support
     requirements_raw = data['requirements']
 
-    # Expand requirements like 24x4 to [24, 24, 24, 24]
+    # Expand requirements like 24.5x4 to [24.5, 24.5, 24.5, 24.5]
     requirements = []
     for req in requirements_raw.split(','):
         length, qty = req.lower().split('x')
-        requirements += [int(length)] * int(qty)
+        requirements += [float(length)] * int(qty)
 
     requirements.sort(reverse=True)
     results = []
 
+    # DP Optimized Mode Only
     while requirements:
         best_combo = []
         best_total = 0
@@ -37,9 +38,9 @@ def optimize():
                         best_total = total
                         best_stock = stock
                         best_waste = stock - total
-                    if best_waste == 0:
+                    if abs(best_waste) < 1e-9:  # near zero waste
                         break
-                if best_waste == 0:
+                if abs(best_waste) < 1e-9:
                     break
 
         if best_combo:
@@ -47,9 +48,9 @@ def optimize():
                 requirements.remove(cut)
 
             results.append({
-                'stock': best_stock,
-                'cuts': list(best_combo),
-                'leftover': best_stock - best_total
+                'stock': round(best_stock, 2),
+                'cuts': [round(c, 2) for c in best_combo],
+                'leftover': round(best_stock - best_total, 2)
             })
         else:
             break
@@ -57,4 +58,5 @@ def optimize():
     return jsonify(results)
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    print("🚀 Flask server running...")
+    app.run(debug=True, host="0.0.0.0")
